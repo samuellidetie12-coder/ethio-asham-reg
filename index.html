@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethio Asham - Tractor Registration</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 15px; }
+        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; font-size: 20px; margin-bottom: 5px; }
+        p.sub { text-align: center; color: #7f8c8d; font-size: 13px; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; background-color: #27ae60; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:hover { background-color: #219653; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>የኢትዮ አሻም የትራክተር ምዝገባ</h2>
+    <p class="sub">Ethio Asham Machinery Registration Form</p>
+
+    <form id="regForm">
+        <div class="form-group">
+            <label>1. የባለቤት ስም / Owner Name</label>
+            <input type="text" id="owner_name" required placeholder="ሙሉ ስም ያስገቡ">
+        </div>
+
+        <div class="form-group">
+            <label>2. የኦፕሬተር ስም / Operator Name</label>
+            <input type="text" id="operator_name" placeholder="የኦፕሬተር ስም (ከተለየ)">
+        </div>
+
+        <div class="form-group">
+            <label>3. ስልክ ቁጥር / Phone Number</label>
+            <input type="tel" id="phone" required placeholder="09xxxxxxxx">
+        </div>
+
+        <div class="form-group">
+            <label>4. የማሽን ዓይነት / Machine Type</label>
+            <select id="machine_type">
+                <option value="Tractor">ትራክተር (Tractor)</option>
+                <option value="Combine Harvester">ኮምባይነር (Combine Harvester)</option>
+                <option value="Other">ሌላ (Other)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>5. ብራንድ እና ሞዴል / Brand & Model</label>
+            <input type="text" id="brand_model" placeholder="ለምሳሌ፦ John Deere, New Holland">
+        </div>
+
+        <div class="form-group">
+            <label>6. የፈረስ ኃይል / አቅም (HP)</label>
+            <input type="text" id="horsepower" placeholder="የፈረስ ኃይል መጠን">
+        </div>
+
+        <div class="form-group">
+            <label>7. የማሽን ሰሌዳ ቁጥር / Plate No.</label>
+            <input type="text" id="plate_no" placeholder="ሰሌዳ ቁጥር (ካለ)">
+        </div>
+
+        <div class="form-group">
+            <label>8. የሚገኝበት ቦታ / Location</label>
+            <input type="text" id="location" required placeholder="ክልል፣ ዞን፣ ወረዳ">
+        </div>
+
+        <div class="form-group">
+            <label>9. የመገኘት ሁኔታ / Availability</label>
+            <select id="availability">
+                <option value="Available">ይገኛል (Available)</option>
+                <option value="Not Available">አይገኝም (Not Available)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>12. የአሁኑ ማሽኑ ሁኔታ / Current Condition</label>
+            <select id="condition">
+                <option value="Excellent">በጣም ጥሩ (Excellent)</option>
+                <option value="Good">ጥሩ (Good)</option>
+                <option value="Fair">መካከለኛ (Fair)</option>
+                <option value="Poor">ደካማ / ጥገና የሚፈልግ (Poor)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>15. የዋጋ ተስፋ / Pricing Expectation (በሰዓት/በቀን)</label>
+            <input type="text" id="pricing" placeholder="የሚጠብቁት የငጋ መጠን">
+        </div>
+
+        <button type="button" onclick="submitData()">ምዝገባውን ላክ (Submit)</button>
+    </form>
+</div>
+
+<script>
+    let tg = window.Telegram.WebApp;
+    tg.expand(); // ሚኒ አፑን ሙሉ ስክሪን እንዲሆን ያደርገዋል
+
+    function submitData() {
+        const formData = {
+            owner_name: document.getElementById('owner_name').value,
+            operator_name: document.getElementById('operator_name').value,
+            phone: document.getElementById('phone').value,
+            machine_type: document.getElementById('machine_type').value,
+            brand_model: document.getElementById('brand_model').value,
+            horsepower: document.getElementById('horsepower').value,
+            plate_no: document.getElementById('plate_no').value,
+            location: document.getElementById('location').value,
+            availability: document.getElementById('availability').value,
+            condition: document.getElementById('condition').value,
+            pricing: document.getElementById('pricing').value,
+            telegram_user: tg.initDataUnsafe?.user?.username || "N/A"
+        };
+
+        if(!formData.owner_name || !formData.phone || !formData.location) {
+            alert("እባክዎ አስፈላጊዎቹን ባዶ ቦታዎች ይሙሉ!");
+            return;
+        }
+
+        // መረጃውን ወደ ዌብሆክ (Webhook) መላክ
+        fetch('https://hook.eu1.make.com/თქვენი-የማክ-ኮም-ዌብሆክ-ሊንክ', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            tg.showAlert("ምዝገባዎ በተሳኬ ሁኔታ ተጠናቋል! እናመሰግናለን።");
+            tg.close(); // ሚኒ አፑን ዘግቶ ወደ ቴሌግራም ቦት ይመልሰዋል
+        })
+        .catch(error => {
+            alert("በምዝገባ ወቅት ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።");
+        });
+    }
+</script>
+
+</body>
+</html>
