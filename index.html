@@ -1,3 +1,5 @@
+HTML
+
 <!DOCTYPE html>
 <html lang="am">
 <head>
@@ -31,8 +33,8 @@
 
     <label>4. የማሽን ዓይነት / Machine Type / Gosa Maashinii</label>
     <select id="machine_type">
-        <option value="Tractor">ትራክተር / Tractor / tiraaktara</option>
-        <option value="Combine Harvester">ኮምባይን ሃርቨስተር / Combine Harvester / Harveestarii</option>
+        <option value="Tractor">ትራክተር / Tractor</option>
+        <option value="Combine Harvester">ኮምባይን ሃርቨስተር / Combine Harvester</option>
     </select>
 
     <label>5. የብራንድ እና ሞዴል / Brand & Model / Brandii fi Modelii</label>
@@ -49,15 +51,15 @@
 
     <label>9. የማግኘት ሁኔታ / Availability / Haala Argamummaa</label>
     <select id="availability">
-        <option value="Available">ይገኛል / Available / Ni argama</option>
-        <option value="Busy">በሥራ ላይ ነው / Busy / Hojii irra jira</option>
+        <option value="Available">ይገኛል / Available</option>
+        <option value="Busy">በሥራ ላይ ነው / Busy</option>
     </select>
 
     <label>10. የዋጋ መለኪያ / Pricing Unit / Safartuu Gatii</label>
     <select id="pricing_unit">
-        <option value="Hectare">በሄክታር / Per Hectare / Hektaaraan</option>
-        <option value="Hour">በሰዓት / Per Hour / Sa'aatiin</option>
-        <option value="Day">በቀን / Per Day / Guyyaadhaan</option>
+        <option value="Hectare">በሄክታር / Per Hectare</option>
+        <option value="Hour">በሰዓት / Per Hour</option>
+        <option value="Day">በቀን / Per Day</option>
     </select>
 
     <label>11. የዋጋ መጠን / Price Amount / Gatii</label>
@@ -89,7 +91,6 @@
             pricing: document.getElementById('pricing').value.trim()
         };
 
-        // ማረጋገጫ (Validation)
         if (!formData.owner_name || !formData.phone || !formData.location) {
             alert("እባክዎ ባለቤት፣ ስልክ እና የሚገኝበትን ቦታ ይሙሉ! / Please fill required fields!");
             return;
@@ -99,15 +100,15 @@
         btn.disabled = true;
         btn.innerText = "በመላክ ላይ... / Sending... / Ergaa jira...";
 
-        // *** የ Make.com ዌብሆክ ሊንክዎን ከዚህ በታች ባለው ነጠላ ሰረዝ ውስጥ ይለጥፉ ***
-        const webhookUrl = 'https://hook.eu1.make.com/hdrh724s3fk1iypx4ihx6eac4avn7adi';
+        // የ Google Apps Script ዌብ አፕ ሊንክዎን ከታች ይለጥፉ
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzDeySyG5gHuLikLezGDjt3_1DyyLKagUKDH9IOJ2P44Md2Cq_rYpA6YLqM8Fh1_kbVwg/exec';
 
-        fetch(webhookUrl, {
+        fetch(scriptURL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         })
-        .then(response => {
+        .then(response => response.json())
+        .then(result => {
             alert("ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል! እናመሰግናለን።");
             try {
                 tg.close();
