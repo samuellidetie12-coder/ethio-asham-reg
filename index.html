@@ -3,126 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethio Asham MaaS - Tractor Registration</title>
+    <title>MaaS Ethiopia - Tractor Registration</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f9; padding: 20px; color: #333; }
-        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h2 { text-align: center; color: #2c3e50; font-size: 18px; }
-        label { display: block; margin-top: 10px; font-weight: bold; font-size: 14px; }
-        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; background-color: #27ae60; color: white; padding: 12px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-top: 20px; }
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 15px; }
+        .container { max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; font-size: 18px; margin-bottom: 5px; }
+        p.sub { text-align: center; color: #7f8c8d; font-size: 12px; margin-top: 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; color: #2c3e50; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; background-color: #27ae60; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
         button:hover { background-color: #219653; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>የአግሮ-ሜካናይዜሽን አገልግሎት ምዝገባ<br>Tractor Registration</h2>
-    
-    <label>1. የባለቤቱ ስም / Owner Name</label>
-    <input type="text" id="owner_name" placeholder="ሙሉ ስም ያስገቡ">
+    <h2>የማሽን ምዝገባ ፎርም</h2>
+    <p class="sub">Tractor Registration / Galmee Maashinii</p>
 
-    <label>2. የኦፕሬተር ስም / Operator Name</label>
-    <input type="text" id="operator_name" placeholder="የኦፕሬተር ስም (ካለ)">
+    <form id="regForm">
+        <div class="form-group">
+            <label>1. የባለቤት ስም / Owner Name / Maqaa Abbaa Qabeenyaa</label>
+            <input type="text" id="owner_name" required placeholder="ሙሉ ስም / Full Name">
+        </div>
 
-    <label>3. ስልክ ቁጥር / Phone Number</label>
-    <input type="tel" id="phone" placeholder="09xxxxxxxx">
+        <div class="form-group">
+            <label>2. የኦፕሬተር ስም / Operator Name / Maqaa Ogeessa Hojii</label>
+            <input type="text" id="operator_name" placeholder="የኦፕሬተር ስም (ከተለየ)">
+        </div>
 
-    <label>4. የማሽን ዓይነት / Machine Type</label>
-    <select id="machine_type">
-        <option value="Tractor">ትራክተር / Tractor</option>
-        <option value="Combine Harvester">ኮምባይን ሃርቨስተር / Combine Harvester</option>
-    </select>
+        <div class="form-group">
+            <label>3. ስልክ ቁጥር / Phone Number / Lakkoofsa Bilbilaa</label>
+            <input type="tel" id="phone" required placeholder="09xxxxxxxx">
+        </div>
 
-    <label>5. የትራክተሩ ብራንድ እና ሞዴል / Brand & Model</label>
-    <input type="text" id="brand_model" placeholder="ለምሳሌ፦ John Deere, Sonalika">
+        <div class="form-group">
+            <label>4. የማሽን ዓይነት / Machine Type / Gosa Maashinii</label>
+            <select id="machine_type">
+                <option value="Tractor">ትራክተር / Tractor / Traktara</option>
+                <option value="Combine Harvester">ኮምባይነር / Combine Harvester</option>
+                <option value="Other">ሌላ / Other / Kan biroo</option>
+            </select>
+        </div>
 
-    <label>6. የፈረስ ጉልበት / Horsepower (HP)</label>
-    <input type="text" id="horsepower" placeholder="ለምሳሌ፦ 75 HP">
+        <div class="form-group">
+            <label>5. ብራንድ እና ሞዴል / Brand & Model / Moodeela</label>
+            <input type="text" id="brand_model" placeholder="ለምሳሌ፦ John Deere, New Holland">
+        </div>
 
-    <label>7. የሰሌዳ ቁጥር / Plate Number</label>
-    <input type="text" id="plate_no" placeholder="የሰሌዳ ቁጥር">
+        <div class="form-group">
+            <label>6. የፈረስ ኃይል / አቅም / Horsepower & Capacity</label>
+            <input type="text" id="horsepower" placeholder="የፈረስ ኃይል መጠን (HP)">
+        </div>
 
-    <label>8. የሚገኝበት ቦታ (ክልል/ዞን/ወረዳ) / Location</label>
-    <input type="text" id="location" placeholder="ቦታውን ይጻፉ">
+        <div class="form-group">
+            <label>7. የማሽን ሰሌዳ ቁጥር / Plate No. / Lakkoofsa Gabatee</label>
+            <input type="text" id="plate_no" placeholder="ሰሌዳ ቁጥር (ካለ)">
+        </div>
 
-    <label>9. የማግኘት ሁኔታ / Availability</label>
-    <select id="availability">
-        <option value="Available">ይገኛል / Available</option>
-        <option value="Busy">በሥራ ላይ ነው / Busy</option>
-    </select>
+        <div class="form-group">
+            <label>8. የሚገኝበት ቦታ / Location / Bakka Maashiniin Jiru</label>
+            <input type="text" id="location" required placeholder="ክልል፣ ዞን፣ ወረዳ / Region, Zone, Woreda">
+        </div>
 
-    <label>10. የማሽኑ ፕላን / Pricing Unit</label>
-    <select id="pricing_unit">
-        <option value="Hectare">በሄክታር / Per Hectare</option>
-        <option value="Hour">በሰዓት / Per Hour</option>
-        <option value="Day">በቀን / Per Day</option>
-    </select>
+        <div class="form-group">
+            <label>9. የመገኘት ሁኔታ / Availability / Haala Argamummaa</label>
+            <select id="availability">
+                <option value="Available">ይገኛል / Available / Ni argama</option>
+                <option value="Not Available">አይገኝም / Not Available / Hin argamu</option>
+            </select>
+        </div>
 
-    <label>11. የዋጋ መጠን / Price Amount</label>
-    <input type="number" id="pricing" placeholder="በብር መጠን">
+        <div class="form-group">
+            <label>12. የአሁኑ ሁኔታ / Current Condition / Haala Yeroo Ammaa</label>
+            <select id="condition">
+                <option value="Excellent">በጣም ጥሩ / Excellent / Baay’ee Gaarii</option>
+                <option value="Good">ጥሩ / Good / Gaarii</option>
+                <option value="Fair">መካከለኛ / Fair / Giddugaleessa</option>
+                <option value="Poor">ደካማ / Poor / Laafaa</option>
+            </select>
+        </div>
 
-    <button type="button" onclick="submitData()">ምዝገባውን ላክ / Submit</button>
+        <div class="form-group">
+            <label>15. የዋጋ ተስፋ / Pricing Expectation / Gatii Eegamu</label>
+            <input type="text" id="pricing" placeholder="የሚጠብቁት የዋጋ መጠን">
+        </div>
+
+        <div class="form-group">
+            <label>16. የዋጋ መለኪያ / Pricing Unit / Safartuu Gatii</label>
+            <select id="pricing_unit">
+                <option value="Hour">ሰዓት / Hour / Sa’aatii</option>
+                <option value="Day">ቀን / Day / Guyyaa</option>
+                <option value="Hectare">ሄክታር / Hectare / Heektaara</option>
+                <option value="Job">ሥራ / Job / Hojii</option>
+            </select>
+        </div>
+
+        <button type="button" onclick="submitData()">ምዝገባውን ላክ / Submit</button>
+    </form>
 </div>
 
 <script>
     let tg = window.Telegram.WebApp;
-    try {
-        tg.expand();
-    } catch (e) {
-        console.log("Not Telegram environment");
-    }
+    tg.expand(); // ሚኒ አፑን ሙሉ ስክሪን እንዲሆን ያደርገዋል
 
     function submitData() {
         const formData = {
-            owner_name: document.getElementById('owner_name').value.trim(),
-            operator_name: document.getElementById('operator_name').value.trim(),
-            phone: document.getElementById('phone.value')?.trim() || document.getElementById('phone').value.trim(),
+            owner_name: document.getElementById('owner_name').value,
+            operator_name: document.getElementById('operator_name').value,
+            phone: document.getElementById('phone').value,
             machine_type: document.getElementById('machine_type').value,
-            brand_model: document.getElementById('brand_model').value.trim(),
-            horsepower: document.getElementById('horsepower').value.trim(),
-            plate_no: document.getElementById('plate_no').value.trim(),
-            location: document.getElementById('location').value.trim(),
+            brand_model: document.getElementById('brand_model').value,
+            horsepower: document.getElementById('horsepower').value,
+            plate_no: document.getElementById('plate_no').value,
+            location: document.getElementById('location').value,
             availability: document.getElementById('availability').value,
+            condition: document.getElementById('condition').value,
+            pricing: document.getElementById('pricing').value,
             pricing_unit: document.getElementById('pricing_unit').value,
-            pricing: document.getElementById('pricing').value.trim()
+            telegram_user: tg.initDataUnsafe?.user?.username || "N/A"
         };
 
-        // ማረጋገጫ (Validation)
-        if (!formData.owner_name || !formData.phone || !formData.location) {
-            alert("እባክዎ ባለቤት፣ ስልክ እና የሚገኝበትን ቦታ ይሙሉ!");
+        if(!formData.owner_name || !formData.phone || !formData.location) {
+            alert("እባክዎ አስፈላጊዎቹን ባዶ ቦታዎች ይሙሉ! / Please fill required fields!");
             return;
         }
 
-        const btn = document.querySelector('button');
-        btn.disabled = true;
-        btn.innerText = "በመላክ ላይ... / Sending...";
-
-        // *** እዚህ በታች ባለው ነጠላ ሰረዝ ውስጥ የ Make.com ዌብሆክ ሊንክዎን ይለጥፉ ***
-        const webhookUrl = https://hook.eu1.make.com/u2qnbfpije435gh3lo7o8q6bpwnveqn9;
-
-        fetch(webhookUrl, {
+        // መረጃውን ወደ Make.com ዌብሆክ መላክ (የእርስዎን ሊንክ ያስገቡበት)
+        fetch(https://hook.eu1.make.com/u2qnbfpije435gh3lo7o8q6bpwnveqn9, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         })
         .then(response => {
-            alert("ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል! እናመሰግናለን።");
-            try {
-                tg.close();
-            } catch (e) {
-                location.reload();
-            }
+            tg.showAlert("ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል! እናመሰግናለን።");
+            tg.close(); // ሚኒ አፑን ዘግቶ ወደ ቴሌግራም ቦት ይመልሰዋል
         })
         .catch(error => {
-            console.error('Error:', error);
-            alert("በምዝገባ ወቅት ችግር ተፈጥሯል. እባክዎ እንደገና ይሞክሩ።");
-            btn.disabled = false;
-            btn.innerText = "ምዝገባውን ላክ / Submit";
+            alert("በምዝገባ ወቅት ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።");
         });
     }
 </script>
 
 </body>
-</html>   
+</html>
