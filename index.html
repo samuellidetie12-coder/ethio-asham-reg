@@ -145,7 +145,64 @@
             alert("በምዝገባ ወቅት ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።");
         });
     }
-</script>
+<script>
+    // ቴሌግራም ዌብ አፕ መሆኑን ማረጋገጥ
+    let tg = window.Telegram.WebApp;
+    try {
+        tg.expand();
+    } catch (e) {
+        console.log("Not inside Telegram");
+    }
 
-</body>
-</html>
+    function submitData() {
+        const formData = {
+            owner_name: document.getElementById('owner_name').value.trim(),
+            operator_name: document.getElementById('operator_name').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            machine_type: document.getElementById('machine_type').value,
+            brand_model: document.getElementById('brand_model').value.trim(),
+            horsepower: document.getElementById('horsepower').value.trim(),
+            plate_no: document.getElementById('plate_no').value.trim(),
+            location: document.getElementById('location').value.trim(),
+            availability: document.getElementById('availability').value,
+            condition: document.getElementById('condition').value,
+            pricing: document.getElementById('pricing').value.trim(),
+            pricing_unit: document.getElementById('pricing_unit').value,
+            telegram_user: tg.initDataUnsafe?.user?.username || "N/A"
+        };
+
+        // አስፈላጊ መረጃዎች መሞላታቸውን ማረጋገጥ
+        if (!formData.owner_name || !formData.phone || !formData.location) {
+            alert("እባክዎ ባለቤት፣ ስልክ እና የሚገኝበትን ቦታ ይሙሉ!");
+            return;
+        }
+
+        // ቁልፉን ሲጫኑ ተጠቃሚው መጫኑን እንዲያውቅ ማሳየት
+        const submitBtn = document.querySelector('button');
+        submitBtn.disabled = true;
+        submitBtn.innerText = " በመላክ ላይ... / Sending...";
+
+        // መረጃውን ወደ Make.com ዌብሆክ መላክ (እባክዎ የእርስዎን ሊንክ ከታች ያስገቡ)
+        fetch('https://hook.eu1.make.com/የእርስዎ-ትክክለኛ-ዌብሆክ-ሊንክ', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            alert("ምዝገባዎ በተሳካ ሁኔታ ተጠናቋል! እናመሰግናለን።");
+            try {
+                tg.close(); // ሚኒ አፑን መዝጋት
+            } catch (e) {
+                location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("በምዝገባ ወቅት ችግር ተፈጥሯል። እባክዎ እንደገና ይሞክሩ።");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "ምዝገባውን ላክ / Submit";
+        });
+    }
+</script>
